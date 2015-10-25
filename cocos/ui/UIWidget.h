@@ -77,6 +77,7 @@ typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 class CC_GUI_DLL Widget : public ProtectedNode, public LayoutParameterProtocol
 {
 public:
+	void setGlobalZOrder(float globalZOrder) override;
     /**
      * Widget focus direction.
      */

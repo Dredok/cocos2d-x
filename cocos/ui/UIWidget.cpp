@@ -1500,7 +1500,18 @@ bool Widget::isLayoutComponentEnabled()const
     return _usingLayoutComponent;
 }
 
-
+void Widget::setGlobalZOrder(float globalZOrder)
+{
+	for (auto&& child : _protectedChildren)
+	{
+		child->setGlobalZOrder(globalZOrder);
+	}
+	for (auto&& child : _children)
+	{
+		child->setGlobalZOrder(globalZOrder);
+	}
+	ProtectedNode::setGlobalZOrder(globalZOrder);
+}
 
 }
 NS_CC_END

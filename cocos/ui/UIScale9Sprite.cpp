@@ -1641,5 +1641,12 @@ namespace ui {
             iter->setCameraMask(mask);
         }
     }
-
+	void Scale9Sprite::setGlobalZOrder(float globalZOrder)
+	{
+		// apply to protected children too
+		for (auto &child : _protectedChildren)
+			child->setGlobalZOrder(globalZOrder);
+		Node::setGlobalZOrder(globalZOrder);
+		if (_scale9Image) _scale9Image->setGlobalZOrder(globalZOrder);
+	}
 }}

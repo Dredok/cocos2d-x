@@ -116,6 +116,7 @@ class CC_GUI_DLL Layout : public Widget, public LayoutProtocol
     DECLARE_CLASS_GUI_INFO
     
 public:
+	void setGlobalZOrder(float globalZOrder) override;
     /**
      * Layout type, default is ABSOLUTE.
      */

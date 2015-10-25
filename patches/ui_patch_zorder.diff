@@ -1,0 +1,183 @@
+From b0f768d2b595baae2de2a3c80e09bd837f0e5e0e Mon Sep 17 00:00:00 2001
+From: Dredok <fjvera@gmail.com>
+Date: Fri, 25 Sep 2015 00:34:00 +0200
+Subject: [PATCH] engine files modified to make global zorder work with ui
+ elements (widgets) and labels
+
+---
+ cocos2d/cocos/2d/CCLabel.cpp        | 12 ++++++++++++
+ cocos2d/cocos/2d/CCLabel.h          |  1 +
+ cocos2d/cocos/ui/UILayout.cpp       | 12 +++++++++++-
+ cocos2d/cocos/ui/UILayout.h         |  1 +
+ cocos2d/cocos/ui/UIScale9Sprite.cpp |  9 +++++++++
+ cocos2d/cocos/ui/UIScale9Sprite.h   |  2 +-
+ cocos2d/cocos/ui/UIWidget.cpp       | 12 ++++++++++++
+ cocos2d/cocos/ui/UIWidget.h         |  1 +
+ 8 files changed, 48 insertions(+), 2 deletions(-)
+
+diff --git a/cocos2d/cocos/2d/CCLabel.cpp b/cocos2d/cocos/2d/CCLabel.cpp
+index 6869152..8484f14 100644
+--- a/cocos2d/cocos/2d/CCLabel.cpp
++++ b/cocos2d/cocos/2d/CCLabel.cpp
+@@ -135,6 +135,15 @@ public:
+     }
+ };
+ 
++void cocos2d::Label::setGlobalZOrder(float order)
++{
++	Node::setGlobalZOrder(order);
++	if (_textSprite)
++	{
++		_textSprite->setGlobalZOrder(order);
++	}
++}
++
+ Label* Label::create()
+ {
+     auto ret = new (std::nothrow) Label();
+@@ -947,6 +956,7 @@ void Label::createSpriteForSystemFont(const FontDefinition& fontDef)
+     _textSprite->retain();
+     _textSprite->updateDisplayedColor(_displayedColor);
+     _textSprite->updateDisplayedOpacity(_displayedOpacity);
++	_textSprite->setGlobalZOrder(_globalZOrder);
+ }
+ 
+ void Label::createShadowSpriteForSystemFont(const FontDefinition& fontDef)
+@@ -986,6 +996,7 @@ void Label::createShadowSpriteForSystemFont(const FontDefinition& fontDef)
+         _shadowNode->retain();
+         _shadowNode->updateDisplayedColor(_displayedColor);
+         _shadowNode->updateDisplayedOpacity(_displayedOpacity);
++		_shadowNode->setGlobalZOrder(_globalZOrder);
+     }
+ }
+ 
+@@ -1069,6 +1080,7 @@ void Label::updateContent()
+     {
+         auto fontDef = _getFontDefinition();
+         createSpriteForSystemFont(fontDef);
++		_textSprite->setGlobalZOrder(_globalZOrder);
+         if (_shadowEnabled)
+         {
+             createShadowSpriteForSystemFont(fontDef);
+diff --git a/cocos2d/cocos/2d/CCLabel.h b/cocos2d/cocos/2d/CCLabel.h
+index bbfeb34..6063c7b 100644
+--- a/cocos2d/cocos/2d/CCLabel.h
++++ b/cocos2d/cocos/2d/CCLabel.h
+@@ -94,6 +94,7 @@ class EventListenerCustom;
+ class CC_DLL Label : public Node, public LabelProtocol, public BlendProtocol
+ {
+ public:
++	void setGlobalZOrder(float order) override;
+     /// @name Creators
+     /// @{
+ 
+diff --git a/cocos2d/cocos/ui/UILayout.cpp b/cocos2d/cocos/ui/UILayout.cpp
+index a482cfe..ebb9206 100644
+--- a/cocos2d/cocos/ui/UILayout.cpp
++++ b/cocos2d/cocos/ui/UILayout.cpp
+@@ -1993,6 +1993,16 @@ void Layout::setCameraMask(unsigned short mask, bool applyChildren)
+         _clippingStencil->setCameraMask(mask, applyChildren);
+     }
+ }
+-    
++
++void Layout::setGlobalZOrder(float globalZOrder)
++{
++	Widget::setGlobalZOrder(globalZOrder);
++	if (_backGroundImage)
++	{
++		_backGroundImage->setGlobalZOrder(globalZOrder -0.5f);
++	}
++}
++
++
+ }
+ NS_CC_END
+diff --git a/cocos2d/cocos/ui/UILayout.h b/cocos2d/cocos/ui/UILayout.h
+index 5f9c7ae..fb82e30 100644
+--- a/cocos2d/cocos/ui/UILayout.h
++++ b/cocos2d/cocos/ui/UILayout.h
+@@ -116,6 +116,7 @@ class CC_GUI_DLL Layout : public Widget, public LayoutProtocol
+     DECLARE_CLASS_GUI_INFO
+     
+ public:
++	void setGlobalZOrder(float globalZOrder) override;
+     /**
+      * Layout type, default is ABSOLUTE.
+      */
+diff --git a/cocos2d/cocos/ui/UIScale9Sprite.cpp b/cocos2d/cocos/ui/UIScale9Sprite.cpp
+index 90e381b..b57ef3e 100644
+--- a/cocos2d/cocos/ui/UIScale9Sprite.cpp
++++ b/cocos2d/cocos/ui/UIScale9Sprite.cpp
+@@ -1643,4 +1643,13 @@ namespace ui {
+         }
+     }
+ 
++	void Scale9Sprite::setGlobalZOrder(float globalZOrder)
++	{
++		// apply to protected children too
++		for (auto &child : _protectedChildren)
++			child->setGlobalZOrder(globalZOrder);
++		Node::setGlobalZOrder(globalZOrder);
++		if (_scale9Image) _scale9Image->setGlobalZOrder(globalZOrder);
++	}
++
+ }}
+diff --git a/cocos2d/cocos/ui/UIScale9Sprite.h b/cocos2d/cocos/ui/UIScale9Sprite.h
+index c70bde0..a1ddf6f 100644
+--- a/cocos2d/cocos/ui/UIScale9Sprite.h
++++ b/cocos2d/cocos/ui/UIScale9Sprite.h
+@@ -53,6 +53,7 @@ namespace ui {
+     class CC_GUI_DLL Scale9Sprite : public Node , public cocos2d::BlendProtocol
+     {
+     public:
++		void setGlobalZOrder(float globalZOrder) override;
+         /**
+          * Default constructor.
+          * @js ctor
+@@ -743,7 +744,6 @@ namespace ui {
+         
+         /// helper that reorder a child
+         void addProtectedChild(Node* child);
+-        
+         Vector<Node*> _protectedChildren;        ///holds the 9 sprites
+         bool _reorderProtectedChildDirty;
+         
+diff --git a/cocos2d/cocos/ui/UIWidget.cpp b/cocos2d/cocos/ui/UIWidget.cpp
+index 8138f2f..1282e10 100644
+--- a/cocos2d/cocos/ui/UIWidget.cpp
++++ b/cocos2d/cocos/ui/UIWidget.cpp
+@@ -1496,6 +1496,18 @@ bool Widget::isLayoutComponentEnabled()const
+     return _usingLayoutComponent;
+ }
+ 
++void Widget::setGlobalZOrder(float globalZOrder)
++{
++	for (auto&& child : _protectedChildren)
++	{
++		child->setGlobalZOrder(globalZOrder);
++	}
++	for (auto&& child : _children)
++	{
++		child->setGlobalZOrder(globalZOrder);
++	}
++	ProtectedNode::setGlobalZOrder(globalZOrder);
++}
+ 
+ 
+ }
+diff --git a/cocos2d/cocos/ui/UIWidget.h b/cocos2d/cocos/ui/UIWidget.h
+index d0de0b1..2a49ab4 100644
+--- a/cocos2d/cocos/ui/UIWidget.h
++++ b/cocos2d/cocos/ui/UIWidget.h
+@@ -77,6 +77,7 @@ typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
+ class CC_GUI_DLL Widget : public ProtectedNode, public LayoutParameterProtocol
+ {
+ public:
++	void setGlobalZOrder(float globalZOrder) override;
+     /**
+      * Widget focus direction.
+      */
+-- 
+1.9.5.msysgit.0
+

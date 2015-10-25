@@ -995,6 +995,7 @@ void Label::createSpriteForSystemFont(const FontDefinition& fontDef)
     _textSprite->retain();
     _textSprite->updateDisplayedColor(_displayedColor);
     _textSprite->updateDisplayedOpacity(_displayedOpacity);
+	_textSprite->setGlobalZOrder(_globalZOrder);
 }
 
 void Label::createShadowSpriteForSystemFont(const FontDefinition& fontDef)
@@ -1036,6 +1037,7 @@ void Label::createShadowSpriteForSystemFont(const FontDefinition& fontDef)
         _shadowNode->updateDisplayedColor(_displayedColor);
         _shadowNode->updateDisplayedOpacity(_displayedOpacity);
     }
+	_textSprite->setGlobalZOrder(_globalZOrder);
 }
 
 void Label::setCameraMask(unsigned short mask, bool applyChildren)
@@ -1124,6 +1126,7 @@ void Label::updateContent()
         }
     }
     _contentDirty = false;
+	_textSprite->setGlobalZOrder(_globalZOrder);
 
 #if CC_LABEL_DEBUG_DRAW
     _debugDrawNode->clear();

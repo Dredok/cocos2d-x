@@ -2031,6 +2031,13 @@ void Layout::setCameraMask(unsigned short mask, bool applyChildren)
         _clippingStencil->setCameraMask(mask, applyChildren);
     }
 }
-    
+void Layout::setGlobalZOrder(float globalZOrder)
+{
+	Widget::setGlobalZOrder(globalZOrder);
+	if (_backGroundImage)
+	{
+		_backGroundImage->setGlobalZOrder(globalZOrder - 0.5f);
+	}
+}
 }
 NS_CC_END

@@ -95,7 +95,7 @@ class EventListenerCustom;
 class CC_DLL Label : public Node, public LabelProtocol, public BlendProtocol
 {
 public:
-    /// @name Creators
+	/// @name Creators
     /// @{
 
     /**
