@@ -72,7 +72,7 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
 - (id) init
 {
     if( (self = [super init]) ) {
-        _acceleration = new cocos2d::Acceleration();
+        _acceleration = new (std::nothrow) cocos2d::Acceleration();
         _motionManager = [[CMMotionManager alloc] init];
         _motionManager.accelerometerUpdateInterval = SENSOR_DELAY_GAME;
     }
@@ -500,7 +500,7 @@ void Device::setKeepScreenOn(bool value)
 }
 
 /*!
- @brief Only works on iOS devices that support vibration (such as iPhone). Shoud only be used for important alerts.  Use risks rejection in iTunes Store.
+ @brief Only works on iOS devices that support vibration (such as iPhone). Should only be used for important alerts. Use risks rejection in iTunes Store.
  @param duration ignored for iOS
  */
 void Device::vibrate(float duration)
