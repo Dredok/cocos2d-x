@@ -1301,8 +1301,9 @@ void Label::updateContent()
             createShadowSpriteForSystemFont(fontDef);
         }
     }
-    if(updateFinished){
-        _contentDirty = false;
+	if (updateFinished) {
+		_contentDirty = false;
+	}
     _textSprite->setGlobalZOrder(_globalZOrder);
 
 #if CC_LABEL_DEBUG_DRAW

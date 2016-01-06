@@ -1440,18 +1440,10 @@ namespace ui {
         CC_SAFE_RELEASE_NULL(this->_scale9Image);
     }
     
-    void Scale9Sprite::setGlobalZOrder(float globalZOrder)
-    {
-        Node::setGlobalZOrder(globalZOrder);
-        if (_scale9Image)
-        {
-            _scale9Image->setGlobalZOrder(globalZOrder);
-        }
-    }
 	void Scale9Sprite::setGlobalZOrder(float globalZOrder)
 	{
 		// apply to protected children too
-		for (auto &child : _protectedChildren)
+		for (auto child : _children)
 			child->setGlobalZOrder(globalZOrder);
 		Node::setGlobalZOrder(globalZOrder);
 		if (_scale9Image) _scale9Image->setGlobalZOrder(globalZOrder);

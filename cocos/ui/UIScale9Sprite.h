@@ -56,7 +56,6 @@ namespace ui {
     class CC_GUI_DLL Scale9Sprite : public Node , public cocos2d::BlendProtocol
     {
     public:
-		void setGlobalZOrder(float globalZOrder) override;
         /**
          * Default constructor.
          * @js ctor
