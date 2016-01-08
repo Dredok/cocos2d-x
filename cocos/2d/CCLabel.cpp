@@ -1304,7 +1304,9 @@ void Label::updateContent()
 	if (updateFinished) {
 		_contentDirty = false;
 	}
-    _textSprite->setGlobalZOrder(_globalZOrder);
+	if (_textSprite) {
+		_textSprite->setGlobalZOrder(_globalZOrder);
+	}
 
 #if CC_LABEL_DEBUG_DRAW
     _debugDrawNode->clear();
