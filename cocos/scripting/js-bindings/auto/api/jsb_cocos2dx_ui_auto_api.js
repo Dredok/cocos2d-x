@@ -4253,7 +4253,7 @@ getDetachWithIME : function (
 
 /**
  * @method getCharCount
- * @return {int}
+ * @return {unsigned long}
  */
 getCharCount : function (
 )
@@ -4706,6 +4706,16 @@ bool
 },
 
 /**
+ * @method setCursorPosition
+ * @param {unsigned long} arg0
+ */
+setCursorPosition : function (
+long 
+)
+{
+},
+
+/**
  * @method getTextHorizontalAlignment
  * @return {cc.TextHAlignment}
  */
@@ -4736,6 +4746,18 @@ str
 },
 
 /**
+ * @method setCursorFromPoint
+ * @param {vec2_object} arg0
+ * @param {cc.Camera} arg1
+ */
+setCursorFromPoint : function (
+vec2, 
+camera 
+)
+{
+},
+
+/**
  * @method setPlaceHolderColor
 * @param {color4b_object|color3b_object} color4b
 */
@@ -4761,6 +4783,16 @@ texthalignment
  */
 setTextColor : function (
 color4b 
+)
+{
+},
+
+/**
+ * @method setCursorChar
+ * @param {char} arg0
+ */
+setCursorChar : function (
+char 
 )
 {
 },
@@ -4821,6 +4853,16 @@ bool
  */
 setMaxLength : function (
 int 
+)
+{
+},
+
+/**
+ * @method setCursorEnabled
+ * @param {bool} arg0
+ */
+setCursorEnabled : function (
+bool 
 )
 {
 },
@@ -4976,56 +5018,6 @@ float
 },
 
 /**
- * @method setIndicatorSelectedIndexColor
- * @param {color3b_object} arg0
- */
-setIndicatorSelectedIndexColor : function (
-color3b 
-)
-{
-},
-
-/**
- * @method getIndicatorSelectedIndexColor
- * @return {color3b_object}
- */
-getIndicatorSelectedIndexColor : function (
-)
-{
-    return cc.Color3B;
-},
-
-/**
- * @method getIndicatorPositionAsAnchorPoint
- * @return {vec2_object}
- */
-getIndicatorPositionAsAnchorPoint : function (
-)
-{
-    return cc.Vec2;
-},
-
-/**
- * @method setIndicatorPosition
- * @param {vec2_object} arg0
- */
-setIndicatorPosition : function (
-vec2 
-)
-{
-},
-
-/**
- * @method getIndicatorPosition
- * @return {vec2_object}
- */
-getIndicatorPosition : function (
-)
-{
-    return cc.Vec2;
-},
-
-/**
  * @method insertPage
  * @param {ccui.Widget} arg0
  * @param {int} arg1
@@ -5038,21 +5030,31 @@ int
 },
 
 /**
- * @method getCurrentPageIndex
- * @return {long}
+ * @method setAutoScrollStopEpsilon
+ * @param {float} arg0
  */
-getCurrentPageIndex : function (
+setAutoScrollStopEpsilon : function (
+float 
 )
 {
-    return 0;
 },
 
 /**
- * @method removePage
- * @param {ccui.Widget} arg0
+ * @method setIndicatorEnabled
+ * @param {bool} arg0
  */
-removePage : function (
-widget 
+setIndicatorEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setIndicatorSelectedIndexColor
+ * @param {color3b_object} arg0
+ */
+setIndicatorSelectedIndexColor : function (
+color3b 
 )
 {
 },
@@ -5068,6 +5070,16 @@ func
 },
 
 /**
+ * @method getIndicatorPosition
+ * @return {vec2_object}
+ */
+getIndicatorPosition : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
  * @method setCurrentPageIndex
  * @param {long} arg0
  */
@@ -5078,13 +5090,23 @@ long
 },
 
 /**
- * @method getIndicatorEnabled
- * @return {bool}
+ * @method getIndicatorSelectedIndexColor
+ * @return {color3b_object}
  */
-getIndicatorEnabled : function (
+getIndicatorSelectedIndexColor : function (
 )
 {
-    return false;
+    return cc.Color3B;
+},
+
+/**
+ * @method setIndicatorPosition
+ * @param {vec2_object} arg0
+ */
+setIndicatorPosition : function (
+vec2 
+)
+{
 },
 
 /**
@@ -5118,21 +5140,59 @@ long
 },
 
 /**
- * @method setIndicatorEnabled
- * @param {bool} arg0
+ * @method removeAllPages
  */
-setIndicatorEnabled : function (
-bool 
+removeAllPages : function (
 )
 {
 },
 
 /**
- * @method addPage
+ * @method getIndicatorPositionAsAnchorPoint
+ * @return {vec2_object}
+ */
+getIndicatorPositionAsAnchorPoint : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method getCurrentPageIndex
+ * @return {long}
+ */
+getCurrentPageIndex : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method removePage
  * @param {ccui.Widget} arg0
  */
-addPage : function (
+removePage : function (
 widget 
+)
+{
+},
+
+/**
+ * @method getIndicatorEnabled
+ * @return {bool}
+ */
+getIndicatorEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method removePageAtIndex
+ * @param {long} arg0
+ */
+removePageAtIndex : function (
+long 
 )
 {
 },
@@ -5148,19 +5208,11 @@ getIndicatorSpaceBetweenIndexNodes : function (
 },
 
 /**
- * @method removeAllPages
+ * @method addPage
+ * @param {ccui.Widget} arg0
  */
-removeAllPages : function (
-)
-{
-},
-
-/**
- * @method removePageAtIndex
- * @param {long} arg0
- */
-removePageAtIndex : function (
-long 
+addPage : function (
+widget 
 )
 {
 },
@@ -6963,6 +7015,354 @@ node
 LayoutComponent : function (
 )
 {
+},
+
+};
+
+/**
+ * @class TabHeader
+ */
+ccui.TabHeader = {
+
+/**
+ * @method getIndexInTabControl
+ * @return {int}
+ */
+getIndexInTabControl : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getTitleText
+ * @return {String}
+ */
+getTitleText : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method setTitleFontSize
+ * @param {float} arg0
+ */
+setTitleFontSize : function (
+float 
+)
+{
+},
+
+/**
+ * @method setTitleFontName
+ * @param {String} arg0
+ */
+setTitleFontName : function (
+str 
+)
+{
+},
+
+/**
+ * @method getTitleFontSize
+ * @return {float}
+ */
+getTitleFontSize : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getTitleFontName
+ * @return {String}
+ */
+getTitleFontName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getTitleColor
+ * @return {color4b_object}
+ */
+getTitleColor : function (
+)
+{
+    return cc.Color4B;
+},
+
+/**
+ * @method getTitleRenderer
+ * @return {cc.Label}
+ */
+getTitleRenderer : function (
+)
+{
+    return cc.Label;
+},
+
+/**
+ * @method setTitleText
+ * @param {String} arg0
+ */
+setTitleText : function (
+str 
+)
+{
+},
+
+/**
+ * @method setTitleColor
+ * @param {color4b_object} arg0
+ */
+setTitleColor : function (
+color4b 
+)
+{
+},
+
+/**
+ * @method create
+* @param {String|String} str
+* @param {String|String} str
+* @param {String|String} str
+* @param {ccui.Widget::TextureResType|String} texturerestype
+* @param {String} str
+* @param {String} str
+* @param {ccui.Widget::TextureResType} texturerestype
+* @return {ccui.TabHeader|ccui.TabHeader|ccui.TabHeader}
+*/
+create : function(
+str,
+str,
+str,
+str,
+str,
+str,
+texturerestype 
+)
+{
+    return ccui.TabHeader;
+},
+
+};
+
+/**
+ * @class TabControl
+ */
+ccui.TabControl = {
+
+/**
+ * @method setHeaderWidth
+ * @param {float} arg0
+ */
+setHeaderWidth : function (
+float 
+)
+{
+},
+
+/**
+ * @method removeTab
+ * @param {int} arg0
+ */
+removeTab : function (
+int 
+)
+{
+},
+
+/**
+ * @method getTabCount
+ * @return {unsigned long}
+ */
+getTabCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getHeaderDockPlace
+ * @return {ccui.TabControl::Dock}
+ */
+getHeaderDockPlace : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getSelectedTabIndex
+ * @return {int}
+ */
+getSelectedTabIndex : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method insertTab
+ * @param {int} arg0
+ * @param {ccui.TabHeader} arg1
+ * @param {ccui.Layout} arg2
+ */
+insertTab : function (
+int, 
+tabheader, 
+layout 
+)
+{
+},
+
+/**
+ * @method ignoreHeadersTextureSize
+ * @param {bool} arg0
+ */
+ignoreHeadersTextureSize : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getHeaderWidth
+ * @return {float}
+ */
+getHeaderWidth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setHeaderDockPlace
+ * @param {ccui.TabControl::Dock} arg0
+ */
+setHeaderDockPlace : function (
+dock 
+)
+{
+},
+
+/**
+ * @method setSelectTab
+* @param {ccui.TabHeader|int} tabheader
+*/
+setSelectTab : function(
+int 
+)
+{
+},
+
+/**
+ * @method getTabHeader
+ * @param {int} arg0
+ * @return {ccui.TabHeader}
+ */
+getTabHeader : function (
+int 
+)
+{
+    return ccui.TabHeader;
+},
+
+/**
+ * @method isIgnoreHeadersTextureSize
+ * @return {bool}
+ */
+isIgnoreHeadersTextureSize : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setTabChangedEventListener
+ * @param {function} arg0
+ */
+setTabChangedEventListener : function (
+func 
+)
+{
+},
+
+/**
+ * @method setHeaderSelectedZoom
+ * @param {float} arg0
+ */
+setHeaderSelectedZoom : function (
+float 
+)
+{
+},
+
+/**
+ * @method setHeaderHeight
+ * @param {float} arg0
+ */
+setHeaderHeight : function (
+float 
+)
+{
+},
+
+/**
+ * @method indexOfTabHeader
+ * @param {ccui.TabHeader} arg0
+ * @return {int}
+ */
+indexOfTabHeader : function (
+tabheader 
+)
+{
+    return 0;
+},
+
+/**
+ * @method getTabContainer
+ * @param {int} arg0
+ * @return {ccui.Layout}
+ */
+getTabContainer : function (
+int 
+)
+{
+    return ccui.Layout;
+},
+
+/**
+ * @method getHeaderSelectedZoom
+ * @return {float}
+ */
+getHeaderSelectedZoom : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getHeaderHeight
+ * @return {int}
+ */
+getHeaderHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method create
+ * @return {ccui.TabControl}
+ */
+create : function (
+)
+{
+    return ccui.TabControl;
 },
 
 };

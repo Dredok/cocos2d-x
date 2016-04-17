@@ -341,6 +341,8 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE bool isUsingCustomScrollThreshold()const;
 
+    void setAutoScrollStopEpsilon(float epsilon);
+
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
@@ -349,7 +351,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     void pageTurningEvent();
-    virtual float getAutoScrollStopEpsilon() override;
+    virtual float getAutoScrollStopEpsilon() const override;
 
     virtual void remedyLayoutParameter(Widget* item)override;
     virtual void moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack) override;
@@ -384,6 +386,7 @@ protected:
 #pragma warning (pop)
 #endif
     ccPageViewCallback _eventCallback;
+    float _autoScrollStopEpsilon;
 };
 
 }
